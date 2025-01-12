@@ -49,7 +49,7 @@ jobs:
 
       - name: Run tests with coverage
         run: |
-          pytest --cov=./ --cov-fail-under=0
+          pytest --cov=./
 
       - name: Upload coverage report
         uses: actions/upload-artifact@v3
