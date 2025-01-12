@@ -23,6 +23,7 @@ jobs:
       - name: Install dependencies
         run: |
           python -m pip install --upgrade pip
+          pip install -r requirements.txt
           pip install pylint
 
       - name: Run pylint
@@ -71,7 +72,7 @@ jobs:
 
       - name: Build and push Docker image
         run: |
-          IMAGE_NAME=username/repository-name
+          IMAGE_NAME=anirudhpugazh97/flask-app
           VERSION=$(date +%Y%m%d%H%M%S)
           docker build -t $IMAGE_NAME:latest -t $IMAGE_NAME:$VERSION .
           docker push $IMAGE_NAME:latest
