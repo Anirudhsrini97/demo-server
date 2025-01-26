@@ -1,10 +1,6 @@
-version: '3.8'
 services:
   flask-app:
-    build:
-      context: .
-      dockerfile: Dockerfile
+    image: anirudhpugazh97/flask-app:latest
+    restart: always
     ports:
       - "8080:8080"
-    environment:
-      - FLASK_APP=app.py

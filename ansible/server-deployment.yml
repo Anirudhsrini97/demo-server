@@ -1,0 +1,61 @@
+---
+- name: Restart or deploy app
+  hosts: all
+  become: yes
+
+  tasks:
+    # Clone the repository
+    - name: Clone the repository
+      git:
+        repo: "https://github.com/Anirudhsrini97/demo-infras.git"
+        dest: "/home/ubuntu/demo-server"
+        version: "HEAD"
+        accept_hostkey: yes
+      become: no
+      register: git_clone_status
+
+    # Stop running containers if any
+    - name: Stop running containers
+      command: docker-compose down -v
+      ignore_errors: yes
+      args:
+        chdir: /home/ubuntu/demo-server
+
+    # Remove the specific image
+    - name: Remove the Docker image
+      command: docker rmi anirudhpugazh97/flask-app:latest
+      ignore_errors: yes
+
+    # Start the container in daemon mode
+    - name: Start the Docker container
+      command: docker-compose up -d
+      args:
+        chdir: /home/ubuntu/demo-server
+
+    # Test Nginx configuration
+    - name: Test Nginx configuration
+      command: nginx -t
+      become: yes
+
+    # Reload Nginx
+    - name: Reload Nginx
+      service:
+        name: nginx
+        state: reloaded
+      become: yes
+
+    # Ensure the service is running
+    - name: Check the /health endpoint
+      uri:
+        url: http://127.0.0.1/health
+        method: GET
+        status_code: 200
+
+  handlers:
+    - name: Reload systemd
+      command: systemctl daemon-reload
+
+    - name: Reload Nginx
+      service:
+        name: nginx
+        state: reloaded
