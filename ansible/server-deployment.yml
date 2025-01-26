@@ -16,7 +16,7 @@
 
     # Stop running containers if any
     - name: Stop running containers
-      command: docker-compose down -v
+      command: docker compose down -v
       ignore_errors: yes
       args:
         chdir: /home/ubuntu/demo-server
@@ -28,7 +28,7 @@
 
     # Start the container in daemon mode
     - name: Start the Docker container
-      command: docker-compose up -d
+      command: docker compose up -d
       args:
         chdir: /home/ubuntu/demo-server
 
