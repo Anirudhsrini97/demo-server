@@ -7,7 +7,7 @@
     # Clone the repository
     - name: Clone the repository
       git:
-        repo: "https://github.com/Anirudhsrini97/demo-infras.git"
+        repo: "https://github.com/Anirudhsrini97/demo-server.git"
         dest: "/home/ubuntu/demo-server"
         version: "HEAD"
         accept_hostkey: yes
